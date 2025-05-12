@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import IconCancelStatus from './components/icons/IconCancelStatus.vue'
 import BaseAlert from './components/BaseAlert.vue'
 import BaseMessages from './components/BaseMessages.vue'
 import BaseMessagesForm from './components/BaseMessagesForm.vue'
