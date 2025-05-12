@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import IconCancelStatus from './components/icons/IconCancelStatus.vue'
 import BaseAlert from './components/BaseAlert.vue'
 import BaseMessages from './components/BaseMessages.vue'
+import BaseMessagesForm from './components/BaseMessagesForm.vue'
 
 type Message = {
   id: number
@@ -43,26 +44,17 @@ const currentMessage = computed(() => {
   return allowedMessages.value[newCurrentIndex] || 'Ничего'
 })
 
-const messageInput = ref<string>('')
-
-const addMessage = () => {
-  if (!messageInput.value) {
-    return
-  }
-
+const addMessage = (value: string) => {
   messages.value.push({
     id: Date.now(),
-    description: messageInput.value,
+    description: value,
     date: 'Date.now()',
     isCanceled: false,
   })
-
-  messageInput.value = ''
 }
 
-const submit = (event: Event) => {
-  event.preventDefault()
-  addMessage()
+const submit = (value: string) => {
+  addMessage(value)
 }
 
 const cancelMessage = (id: Message['id']) => {
@@ -85,32 +77,8 @@ setInterval(() => currentMessageIndex.value++, messageTimer)
       :message="currentMessage"
       @cancel-message="cancelMessage(currentMessage.id)"
     ></base-alert>
-    <base-messages :messages="messages"></base-messages>
-    <!-- <div class="row">
-      <form @submit="submit">
-        <div class="row">
-          <div class="col-8">
-            <input
-              v-model="messageInput"
-              type="text"
-              class="form-control"
-              placeholder="Сообщение"
-              aria-label="Сообщение"
-            />
-          </div>
-          <div class="col-4">
-            <button
-              type="submit"
-              class="form-control"
-              placeholder="Last name"
-              aria-label="Last name"
-            >
-              Отправить
-            </button>
-          </div>
-        </div>
-      </form>
-    </div> -->
+    <base-messages :messages="messages" class="mb-4"></base-messages>
+    <base-messages-form @submit="submit" />
   </div>
 </template>
 
