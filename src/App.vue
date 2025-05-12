@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import IconCancel from './components/icons/IconCancel.vue'
+import IconCancelStatus from './components/icons/IconCancelStatus.vue'
 import BaseAlert from './components/BaseAlert.vue'
+import BaseMessages from './components/BaseMessages.vue'
 
 type Message = {
   id: number
@@ -78,17 +79,14 @@ setInterval(() => currentMessageIndex.value++, messageTimer)
 </script>
 
 <template>
-  <div class="container w-50 mx-auto">
+  <div class="container w-50 mx-auto shadow-lg rounded-2 p-4">
     <base-alert
+      class="mb-4"
       :message="currentMessage"
       @cancel-message="cancelMessage(currentMessage.id)"
     ></base-alert>
+    <base-messages :messages="messages"></base-messages>
     <!-- <div class="row">
-      <p v-for="message in messages" :key="message.id">
-        {{ message.isCanceled }}. {{ message.description }}
-      </p>
-    </div>
-    <div class="row">
       <form @submit="submit">
         <div class="row">
           <div class="col-8">
